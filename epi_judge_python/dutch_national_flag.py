@@ -9,53 +9,20 @@ RED, WHITE, BLUE = range(3)
 
 
 def dutch_flag_partition(pivot_index: int, A: List[int]) -> None:
-    '''
-    0 1 2 0 2 1 1, index = 1, n = 1
-    0 1 1 0 1 2 2
-
-    1. hi, go until reach x != n
-    2. lo, go until reach x == n
-
-    0 1 2 0 2 1 1, n = 2
-        i       j
-    0 1 1 0 2 1 2
-          i   j
-
-    0 1 1 2, n = 1
-
-    '''
-
-    lo, hi = 0, len(A) - 1
+    smaller, eq, greater = 0, 0, len(A)
     n = A[pivot_index]
-    while True:
-        while lo < len(A) and A[lo] <= n:
-            lo += 1
+    while eq < greater:
+        if A[eq] < n:
+            A[eq], A[smaller] = A[smaller], A[eq]
+            smaller += 1
+            eq += 1
+        elif A[eq] > n:
+            A[eq], A[greater-1] = A[greater-1], A[eq]
+            greater -= 1
+        else:
+            eq += 1
 
-        while hi >= 0 and A[hi] > n:
-            hi -= 1
 
-        if lo >= hi:
-            break
-
-        A[lo], A[hi] = A[hi], A[lo]
-        lo += 1
-        hi -= 1
-
-    upper = hi
-    lo = 0
-    while True:
-        while lo < upper and A[lo] != n:
-            lo += 1
-
-        while hi >= 0 and A[hi] == n:
-            hi -= 1
-
-        if lo >= hi:
-            break
-
-        A[lo], A[hi] = A[hi], A[lo]
-        lo += 1
-        hi -= 1
 
 @enable_executor_hook
 def dutch_flag_partition_wrapper(executor, A, pivot_idx):
