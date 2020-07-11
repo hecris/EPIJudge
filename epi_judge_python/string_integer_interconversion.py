@@ -1,5 +1,7 @@
 from test_framework import generic_test
 from test_framework.test_failure import TestFailure
+import functools
+import string
 
 
 def int_to_string(x: int) -> str:
@@ -24,18 +26,7 @@ def int_to_string(x: int) -> str:
 
 
 def string_to_int(s: str) -> int:
-    res = 0
-    sign = 1
-    for i in (range(len(s))):
-        if s[i] == '-':
-            sign = -1
-            continue
-        if s[i] == '+':
-            continue
-        digit = ord(s[i]) - 48
-        res *= 10
-        res += digit
-    return res * sign
+    return functools.reduce(lambda running_sum, c: running_sum * 10 + string.digits.index(c), s[s[0] in '-+':], 0) * (-1 if s[0] == '-' else 1)
 
 
 def wrapper(x, s):
