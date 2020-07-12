@@ -3,13 +3,29 @@ from test_framework.test_failure import TestFailure
 
 
 def decoding(s: str) -> str:
-    # TODO - you fill in here.
-    return ''
+    i = 0
+    res = []
+    while i < len(s):
+        num = ''
+        while s[i].isnumeric():
+            num += s[i]
+            i += 1
+        res.append(s[i] * int(num))
+        i += 1
+    return ''.join(res)
 
 
 def encoding(s: str) -> str:
-    # TODO - you fill in here.
-    return ''
+    i = 0
+    res = []
+    while i < len(s):
+        count = 1
+        while i < len(s) - 1 and s[i] == s[i+1]:
+            count += 1
+            i += 1
+        res.append(str(count) + s[i])
+        i += 1
+    return ''.join(res)
 
 
 def rle_tester(encoded, decoded):
