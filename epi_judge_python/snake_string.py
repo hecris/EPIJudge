@@ -4,6 +4,10 @@ from test_framework import generic_test
 def snake_string(s: str) -> str:
     # TODO - you fill in here.
     res = []
+
+    # Pythonic one line
+    # return s[1::4] + s[::2] + s[3::4]
+
     for i in range(1, len(s), 4):
         res.append(s[i])
 
