@@ -37,8 +37,6 @@ def wrapper(x, s):
 
 
 if __name__ == '__main__':
-    # print(string_to_int("0"))
-    # print(int_to_string(0))
     exit(
         generic_test.generic_test_main('string_integer_interconversion.py',
                                        'string_integer_interconversion.tsv',

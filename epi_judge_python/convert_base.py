@@ -15,7 +15,6 @@ def convert_base(num_as_string: str, b1: int, b2: int) -> str:
         res.reverse()
         return ''.join(res)
 
-
     negative = num_as_string[0] == '-'
     num_as_int = functools.reduce(
             lambda running_sum, c: running_sum * b1 + string.hexdigits.index(c.lower()),
