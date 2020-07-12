@@ -1,5 +1,4 @@
 from test_framework import generic_test
-    # TODO - you fill in here.
 
 
 def is_palindromic(s: str) -> bool:
