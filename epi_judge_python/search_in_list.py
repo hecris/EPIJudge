@@ -3,8 +3,13 @@ from test_framework import generic_test
 
 
 def search_list(L: ListNode, key: int) -> ListNode:
-    # TODO - you fill in here.
-    return ListNode()
+    cur = L
+    while cur:
+        if cur.data == key:
+            return cur
+        cur = cur.next
+
+    return cur
 
 
 def search_list_wrapper(L, key):
