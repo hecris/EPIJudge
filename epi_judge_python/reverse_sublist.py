@@ -4,6 +4,7 @@ from list_node import ListNode
 from test_framework import generic_test
 
 
+# NOTE: There is a one-pass solution in the book.
 def reverse_sublist(L: ListNode, start: int,
                     finish: int) -> Optional[ListNode]:
     if not L or start == finish:
