@@ -13,25 +13,24 @@ def lca(tree: BinaryTreeNode, node0: BinaryTreeNode,
 
     def helper(root):
         if not root:
-            return root, False
+            return root # a null node cannot be the LCA
 
-        left, left_is_lca = helper(root.left)
-        right, right_is_lca = helper(root.right)
+        left = helper(root.left)
+        right = helper(root.right)
 
-        if root is node0:
-            is_lca = left is node1 or right is node1
-            return root, is_lca
-
-        if root is node1:
-            is_lca = right is node0 or right is node0
-            return root, is_lca
+        if root is node0 or root is node1:
+            # base case #2: if node is either of the targets,
+            # it is potentially the LCA
+            return root
 
         if left is None or right is None:
-            return (left, True) if right is None else (right, True)
+            # either the left or right subtree has both targets,
+            # return the LCA in that tree
+            return left if right is None else right
 
-        return root, True
+        return root # this has to be the LCA
 
-    return helper(tree)[0]
+    return helper(tree)
 
 
 @enable_executor_hook
