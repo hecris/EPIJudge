@@ -3,6 +3,7 @@ from test_framework import generic_test
 
 
 def is_balanced_binary_tree(tree: BinaryTreeNode) -> bool:
+    # NOTE: don't need depth parameter if you use 1 + max(...)
     def helper(root, depth):
         if not root:
             return (True, depth)
