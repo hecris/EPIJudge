@@ -11,33 +11,25 @@ from test_framework.test_utils import enable_executor_hook
 def lca(node0: BinaryTreeNode,
         node1: BinaryTreeNode) -> Optional[BinaryTreeNode]:
 
-    def search(root, target):
+    def depth(root):
         if not root:
-            return False
+            return 0
+        return 1 + depth(root.parent)
 
-        if root is target:
-            return True
+    d1, d2 = map(depth, (node0, node1))
+    diff = abs(d1 - d2)
+    if d1 < d2:
+        node0, node1 = node1, node0
 
-        return search(root.left, target) or search(root.right, target)
+    while diff > 0:
+        node0 = node0.parent
+        diff -= 1
 
-    if search(node0, node1):
-        return node0
+    while node0 is not node1:
+        node0 = node0.parent
+        node1 = node1.parent
 
-    prev = node0
-    cur = node0.parent
-
-    while True:
-        if cur is node1:
-            return cur
-
-        if cur.left is prev:
-            if search(cur.right, node1):
-                return cur
-        else:
-            if search(cur.left, node1):
-                return cur
-
-        cur, prev = cur.parent, cur
+    return node0
 
 
 @enable_executor_hook
