@@ -16,6 +16,7 @@ def lca(node0: BinaryTreeNode,
             return 0
         return 1 + depth(root.parent)
 
+    # NOTE: neat trick, map()
     d1, d2 = map(depth, (node0, node1))
     diff = abs(d1 - d2)
     if d1 < d2:
