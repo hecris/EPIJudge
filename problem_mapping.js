@@ -1206,7 +1206,7 @@ problem_mapping = {
                 "total": 10
             },
             "Python: tree_right_sibling.py": {
-                "passed": 10,
+                "passed": 3,
                 "total": 10
             }
         }
