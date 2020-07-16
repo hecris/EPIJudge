@@ -12,9 +12,6 @@ def exterior_binary_tree(tree: BinaryTreeNode) -> List[BinaryTreeNode]:
     if not tree:
         return left
 
-    if not tree.left and not tree.right:
-        return [tree]
-
     # get path to leftmost leaf as well as leaves
     def left_exterior(root, l, left, leaves):
         if l:
@@ -29,21 +26,28 @@ def exterior_binary_tree(tree: BinaryTreeNode) -> List[BinaryTreeNode]:
         if root.right:
             left_exterior(root.right, l and root.left is None, left, leaves)
 
-    left_exterior(tree, tree.left is not None, left, leaves)
+    # get path to rightmost leaf as well as leaves
+    def right_exterior(root, r, right, leaves):
+        if r:
+            right.append(root)
+        elif not root.left and not root.right:
+            leaves.append(root)
+            return
 
-    cur = tree
-    if cur and cur.right:
-        while cur.left or cur.right:
-            if cur is not tree:
-                right.append(cur)
+        if root.left:
+            right_exterior(root.left, r and root.right is None, right, leaves)
 
-            if cur.right:
-                cur = cur.right
-            else:
-                cur = cur.left
+        if root.right:
+            right_exterior(root.right, r, right, leaves)
+
+    if tree.left:
+        left_exterior(tree.left, True, left, leaves)
+
+    if tree.right:
+        right_exterior(tree.right, True, right, leaves)
 
     right.reverse()
-    return (left or [tree]) + leaves + right
+    return [tree] + left + leaves + right
 
 
 def create_output_list(L):
