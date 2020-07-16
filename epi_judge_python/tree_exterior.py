@@ -8,8 +8,42 @@ from test_framework.test_utils import enable_executor_hook
 
 
 def exterior_binary_tree(tree: BinaryTreeNode) -> List[BinaryTreeNode]:
-    # TODO - you fill in here.
-    return []
+    left, right, leaves = [], [], []
+    if not tree:
+        return left
+
+    if not tree.left and not tree.right:
+        return [tree]
+
+    # get path to leftmost leaf as well as leaves
+    def left_exterior(root, l, left, leaves):
+        if l:
+            left.append(root)
+        elif not root.left and not root.right:
+            leaves.append(root)
+            return
+
+        if root.left:
+            left_exterior(root.left, l, left, leaves)
+
+        if root.right:
+            left_exterior(root.right, l and root.left is None, left, leaves)
+
+    left_exterior(tree, tree.left is not None, left, leaves)
+
+    cur = tree
+    if cur and cur.right:
+        while cur.left or cur.right:
+            if cur is not tree:
+                right.append(cur)
+
+            if cur.right:
+                cur = cur.right
+            else:
+                cur = cur.left
+
+    right.reverse()
+    return (left or [tree]) + leaves + right
 
 
 def create_output_list(L):
