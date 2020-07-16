@@ -7,8 +7,30 @@ from test_framework.test_utils import enable_executor_hook
 
 
 def reconstruct_preorder(preorder: List[int]) -> BinaryTreeNode:
-    # TODO - you fill in here.
-    return BinaryTreeNode()
+    if preorder[0] is None:
+        return None
+
+    root = BinaryTreeNode(preorder[0])
+    stack = [[root, 0]]
+
+    for val in preorder[1:]:
+        node = None if val is None else BinaryTreeNode(val)
+        parent, count = stack[-1]
+
+        if count == 0:
+            parent.left = node
+        else:
+            parent.right = node
+
+        stack[-1][1] += 1
+
+        if stack[-1][1] == 2:
+            stack.pop()
+
+        if node:
+            stack.append([node, 0])
+
+    return root
 
 
 @enable_executor_hook
