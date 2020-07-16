@@ -14,8 +14,8 @@ class BinaryTreeNode:
 
 
 def construct_right_sibling(tree: BinaryTreeNode) -> None:
-    # there is an O(1) space solution that exploits the perfect-ness
-    # of the tree in the book
+    # NOTE: there is an O(1) space solution that exploits the
+    # perfect-ness of the tree in the book
     if not tree:
         return
 

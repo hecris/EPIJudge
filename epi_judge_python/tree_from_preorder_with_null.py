@@ -7,6 +7,17 @@ from test_framework.test_utils import enable_executor_hook
 
 
 def reconstruct_preorder(preorder: List[int]) -> BinaryTreeNode:
+    # NOTE: cool alternative recursive solution from the book
+    def alternate(preorder_iter):
+        root = next(preorder_iter)
+        if not root:
+            return None
+        left = alternate(preorder_iter)
+        right = alternate(preorder_iter)
+        return BinaryTreeNode(root, left, right)
+
+    # return alternate(iter(preorder))
+
     if preorder[0] is None:
         return None
 
