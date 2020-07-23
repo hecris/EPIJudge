@@ -3,7 +3,8 @@ from test_framework.test_failure import TestFailure
 from collections import OrderedDict
 
 
-# NOTE: cool solution using OrderedDict, normally use queue + hashmap
+# NOTE: cool solution using OrderedDict
+# normally use queue (linked list) + hashmap
 class LruCache:
     def __init__(self, capacity: int) -> None:
         self.capacity = capacity
@@ -52,13 +53,6 @@ def lru_cache_tester(commands):
 
 
 if __name__ == '__main__':
-    # l = LruCache(3)
-    # l.insert(1,2)
-    # l.insert(3,4)
-    # l.insert(5,6)
-    # l.lookup(1)
-    # l.insert(7,8)
-    # print(l.items)
     exit(
         generic_test.generic_test_main('lru_cache.py', 'lru_cache.tsv',
                                        lru_cache_tester))
