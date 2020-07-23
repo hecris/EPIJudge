@@ -10,6 +10,8 @@ from collections import defaultdict
 Subarray = collections.namedtuple('Subarray', ('start', 'end'))
 
 
+# NOTE: this can be solved using HashMap + Doubly Linked List
+# which seems like a good technique for many problems as well (LRU cache)
 def find_smallest_subarray_covering_set(paragraph: List[str],
                                         keywords: Set[str]) -> Subarray:
     matches = defaultdict(int)
