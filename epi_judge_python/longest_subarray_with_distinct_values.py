@@ -4,8 +4,19 @@ from test_framework import generic_test
 
 
 def longest_subarray_with_distinct_entries(A: List[int]) -> int:
-    # TODO - you fill in here.
-    return 0
+    lo, hi = 0, 0
+    indices = {}
+    max_length = 1 if A else 0
+    while hi < len(A):
+        if A[hi] in indices and indices[A[hi]] >= lo:
+            max_length = max(max_length, hi - lo)
+            lo = indices[A[hi]] + 1
+
+        indices[A[hi]] = hi
+        hi += 1
+
+    max_length = max(max_length, hi - lo)
+    return max_length
 
 
 if __name__ == '__main__':
