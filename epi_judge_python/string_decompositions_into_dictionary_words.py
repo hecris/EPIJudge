@@ -1,40 +1,40 @@
 from typing import List
 
 from test_framework import generic_test
-from collections import Counter
+from collections import Counter, defaultdict
 
 
 def find_all_substrings(s: str, words: List[str]) -> List[int]:
-    w = Counter(words)
+    required = Counter(words)
     k = len(words[0])
     target_length = len(words) * k
 
     res = []
     def helper(lo):
-        word_counter = w.copy()
+        curr = defaultdict(int)
         hi = lo
         while hi < len(s):
             next_word = s[hi:hi+k]
-            if next_word not in word_counter:
+            if next_word not in required:
                 hi += k
                 while lo < hi:
                     lo_word = s[lo:lo+k]
-                    if lo_word in word_counter:
-                        word_counter[lo_word] += 1
+                    if lo_word in curr:
+                        curr[lo_word] -= 1
                     lo += k
-            elif word_counter[next_word] == 0:
-                while word_counter[next_word] == 0:
+            elif required[next_word] == curr[next_word]:
+                while curr[next_word] == required[next_word]:
                     lo_word = s[lo:lo+k]
-                    if lo_word in word_counter:
-                        word_counter[lo_word] += 1
+                    if lo_word in curr:
+                        curr[lo_word] -= 1
                     lo += k
             elif hi + k - lo == target_length:
                 res.append(lo)
                 lo_word = s[lo:lo+k]
-                word_counter[lo_word] += 1
+                curr[lo_word] -= 1
                 lo += k
             else:
-                word_counter[next_word] -= 1
+                curr[next_word] += 1
                 hi += k
 
     for i in range(k):
