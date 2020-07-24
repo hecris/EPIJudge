@@ -4,8 +4,22 @@ from test_framework import generic_test
 
 
 def longest_contained_range(A: List[int]) -> int:
-    # TODO - you fill in here.
-    return 0
+    unprocessed = set(A)
+    max_length = 0
+    while unprocessed:
+        x = unprocessed.pop()
+        lo = x - 1
+        while lo in unprocessed:
+            unprocessed.remove(lo)
+            lo -= 1
+
+        hi = x + 1
+        while hi in unprocessed:
+            unprocessed.remove(hi)
+            hi += 1
+
+        max_length = max(max_length, hi - lo - 1)
+    return max_length
 
 
 if __name__ == '__main__':
