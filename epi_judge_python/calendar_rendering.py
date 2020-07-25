@@ -1,6 +1,7 @@
 import collections
 import functools
 from typing import List
+import heapq
 
 from test_framework import generic_test
 from test_framework.test_utils import enable_executor_hook
@@ -10,8 +11,17 @@ Event = collections.namedtuple('Event', ('start', 'finish'))
 
 
 def find_max_simultaneous_events(A: List[Event]) -> int:
-    # TODO - you fill in here.
-    return 0
+    A.sort()
+    heap = []
+    res = 0
+    for event in A:
+        while heap and heap[0] < event.start:
+            heapq.heappop(heap)
+
+        heapq.heappush(heap, event.finish)
+        res = max(res, len(heap))
+
+    return res
 
 
 @enable_executor_hook
