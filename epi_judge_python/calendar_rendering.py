@@ -11,6 +11,23 @@ Event = collections.namedtuple('Event', ('start', 'finish'))
 
 
 def find_max_simultaneous_events(A: List[Event]) -> int:
+    # def alternate(A):
+    #     # 0 for is starting point
+    #     E = [point for event in A for point in ((event.start, 0), (event.finish, 1))]
+    #     E.sort()
+    #     max_concurrent = 0
+    #     cur_concurrent = 0
+    #     for point, is_start in E:
+    #         if is_start == 0:
+    #             cur_concurrent += 1
+    #         else:
+    #             cur_concurrent -= 1
+
+    #         max_concurrent = max(max_concurrent, cur_concurrent)
+
+    #     return max_concurrent
+
+    # return alternate(A)
     A.sort()
     heap = []
     res = 0
