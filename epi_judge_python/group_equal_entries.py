@@ -5,13 +5,32 @@ from typing import List
 from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 from test_framework.test_utils import enable_executor_hook
+from collections import Counter
 
 Person = collections.namedtuple('Person', ('age', 'name'))
 
 
 def group_by_age(people: List[Person]) -> None:
-    # TODO - you fill in here.
-    return
+    counter = Counter([p.age for p in people])
+    idx, offsets = 0, {}
+    for k,v in counter.items():
+        offsets[k] = idx
+        idx += v
+
+    while offsets:
+        i = next(iter(offsets.values()))
+        while offsets[people[i].age] != i:
+            correct = offsets[people[i].age]
+            people[i], people[correct] = people[correct], people[i]
+            offsets[people[correct].age] += 1
+            counter[people[correct].age] -= 1
+            if counter[people[correct].age] == 0:
+                del offsets[people[correct].age]
+
+        offsets[people[i].age] += 1
+        counter[people[i].age] -= 1
+        if counter[people[i].age] == 0:
+            del offsets[people[i].age]
 
 
 @enable_executor_hook
