@@ -20,7 +20,6 @@ def rebuild_bst_from_preorder(preorder_sequence: List[int]
         root.right, right_size = solution(lo+left_size+1, hi, root_val, end)
         return root, left_size + right_size + 1
 
-
     return solution(0, len(preorder_sequence) - 1, float('-inf'), float('inf'))[0]
 
 
