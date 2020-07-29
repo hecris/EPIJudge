@@ -21,6 +21,21 @@ def phone_mnemonic(phone_number: str) -> List[str]:
 
     return solution(0)
 
+    # Alternate solution (seemingly slower runtime)
+    res = []
+    combo = [0] * len(phone_number)
+    def solution(lo):
+        if lo == len(phone_number):
+            res.append(''.join(combo))
+            return
+
+        for letter in LETTERS[int(phone_number[lo])]:
+            combo[lo] = letter
+            solution(lo+1)
+
+    solution(0)
+
+    return res
 
 if __name__ == '__main__':
     exit(
