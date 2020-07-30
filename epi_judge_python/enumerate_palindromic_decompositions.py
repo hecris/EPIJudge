@@ -4,9 +4,19 @@ from test_framework import generic_test
 
 
 def palindrome_decompositions(text: str) -> List[List[str]]:
-    # TODO - you fill in here.
-    return []
+    def solution(lo, path):
+        if lo == len(text):
+            res.append(path.copy())
+            return
 
+        for i in range(lo+1, len(text) + 1):
+            prefix = text[lo:i]
+            if prefix == prefix[::-1]:
+                solution(i, path + [prefix])
+
+    res = []
+    solution(0, [])
+    return res
 
 def comp(a, b):
     return sorted(a) == sorted(b)

@@ -2072,7 +2072,7 @@ problem_mapping = {
                 "total": 522
             },
             "Python: enumerate_palindromic_decompositions.py": {
-                "passed": 0,
+                "passed": 522,
                 "total": 522
             }
         },
