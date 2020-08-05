@@ -5,7 +5,6 @@ from test_framework import generic_test
 
 def num_combinations_for_final_score(final_score: int,
                                      individual_play_scores: List[int]) -> int:
-    # TODO - you fill in here.
     dp = [[0 for _ in range(len(individual_play_scores))] for _ in range(final_score+1)]
 
     for j in range(len(individual_play_scores)):
