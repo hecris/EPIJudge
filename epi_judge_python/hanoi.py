@@ -9,8 +9,21 @@ NUM_PEGS = 3
 
 
 def compute_tower_hanoi(num_rings: int) -> List[List[int]]:
-    # TODO - you fill in here.
-    return []
+    res = []
+
+    def solution(n, fro, to):
+        if n == 1:
+            res.append((fro, to))
+            return
+
+        aux = 0 ^ 1 ^ 2 ^ fro ^ to
+        solution(n-1, fro, aux)
+        res.append((fro, to))
+        solution(n-1, aux, to)
+
+    solution(num_rings, 0, 1)
+    return res
+
 
 
 @enable_executor_hook

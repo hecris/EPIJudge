@@ -6,9 +6,41 @@ from test_framework.test_failure import TestFailure
 from test_framework.test_utils import enable_executor_hook
 
 
+def differ_by_1_bit(x,y):
+    xor = x ^ y
+    return xor and not xor & (xor - 1)
+
 def gray_code(num_bits: int) -> List[int]:
-    # TODO - you fill in here.
-    return []
+    hi = 1 << num_bits
+
+    ans = []
+    def solution(path, seen):
+        if len(path) == hi:
+            nonlocal ans
+            ans = path.copy()
+            return True
+
+        prev = path[-1]
+        if prev in seen:
+            return False
+
+        seen.add(prev)
+
+        mask = 1
+        while mask <= hi:
+            next_n = mask ^ prev
+            path.append(next_n)
+            if solution(path, seen):
+                return True
+            path.pop()
+            mask <<= 1
+
+        seen.remove(prev)
+        return False
+
+    solution([0], set())
+    return ans
+
 
 
 @enable_executor_hook
