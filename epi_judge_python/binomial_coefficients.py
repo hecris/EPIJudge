@@ -2,8 +2,15 @@ from test_framework import generic_test
 
 
 def compute_binomial_coefficient(n: int, k: int) -> int:
-    # TODO - you fill in here.
-    return 0
+    memo = {}
+    def choose(n, k):
+        if k > n or k < 0: return 0
+        if n == 1: return 1
+        if not (n, k) in memo:
+            memo[n,k] = choose(n-1, k-1) + choose(n-1, k)
+        return memo[n, k]
+
+    return choose(n, k)
 
 
 if __name__ == '__main__':
