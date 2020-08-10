@@ -9,8 +9,22 @@ Item = collections.namedtuple('Item', ('weight', 'value'))
 
 
 def optimum_subject_to_capacity(items: List[Item], capacity: int) -> int:
-    # TODO - you fill in here.
-    return 0
+    n = len(items)
+    dp = [[0 for _ in range(capacity+1)] for _ in range(n)]
+
+    for w in range(1, capacity+1):
+        if items[0].weight <= w:
+            dp[0][w] = items[0].value
+
+    for i in range(1, n):
+        item = items[i]
+        for w in range(1, capacity+1):
+            dp[i][w] = dp[i-1][w]
+            if w - item.weight >= 0:
+                dp[i][w] = max(dp[i][w],
+                               dp[i-1][w-item.weight] + item.value)
+
+    return dp[n-1][capacity]
 
 
 @enable_executor_hook
