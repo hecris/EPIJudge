@@ -2,8 +2,15 @@ from test_framework import generic_test
 
 
 def change_making(cents: int) -> int:
-    # TODO - you fill in here.
-    return 0
+    coins = [1, 5, 10, 25, 50, 100]
+    ans = 0
+    while cents:
+        while coins[-1] > cents:
+            coins.pop()
+        cents -= coins[-1]
+        ans += 1
+
+    return ans
 
 
 if __name__ == '__main__':
