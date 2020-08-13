@@ -4,7 +4,6 @@ from test_framework import generic_test
 
 
 def flip_color(x: int, y: int, image: List[List[bool]]) -> None:
-    # TODO - you fill in here.
     r, c = len(image), len(image[0])
     def valid(x,y):
         return x >= 0 and x < r and y >= 0 and y < c
