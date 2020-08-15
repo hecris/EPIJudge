@@ -3,6 +3,7 @@ from typing import List
 
 from test_framework import generic_test
 from test_framework.test_utils import enable_executor_hook
+from collections import defaultdict
 
 
 class GraphVertex:
@@ -11,8 +12,20 @@ class GraphVertex:
 
 
 def is_deadlocked(graph: List[GraphVertex]) -> bool:
-    # TODO - you fill in here.
-    return True
+    TO_PROCESS, SEEN, PROCESSED = range(3)
+    status = defaultdict(int)
+    def dfs(node):
+        if status[node] == SEEN:
+            return True
+
+        status[node] = SEEN
+        if any(dfs(adj) for adj in node.edges):
+            return True
+
+        status[node] = PROCESSED
+        return False
+
+    return any(status[node] == TO_PROCESS and dfs(node) for node in graph)
 
 
 @enable_executor_hook
