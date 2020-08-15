@@ -12,6 +12,7 @@ class GraphVertex:
 
 
 def is_deadlocked(graph: List[GraphVertex]) -> bool:
+    # WHITE, GRAY, BLACK
     TO_PROCESS, SEEN, PROCESSED = range(3)
     status = defaultdict(int)
     def dfs(node):
