@@ -12,8 +12,15 @@ class GraphVertex:
 
 
 def is_any_placement_feasible(graph: List[GraphVertex]) -> bool:
-    # TODO - you fill in here.
-    return True
+    color = {}
+    def dfs(node, mycolor):
+        if node in color:
+            return color[node] == mycolor
+
+        color[node] = mycolor
+        return all(dfs(adj, not mycolor) for adj in node.edges)
+
+    return all(dfs(node, True) for node in graph if node not in color)
 
 
 @enable_executor_hook
