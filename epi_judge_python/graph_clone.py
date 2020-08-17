@@ -12,8 +12,23 @@ class GraphVertex:
 
 
 def clone_graph(graph: GraphVertex) -> GraphVertex:
-    # TODO - you fill in here.
-    return GraphVertex(0)
+    orig_to_clone = {}
+
+    def make_vertices(node):
+        if node in orig_to_clone:
+            return
+
+        orig_to_clone[node] = GraphVertex(node.label)
+
+        for adj in node.edges:
+            make_vertices(adj)
+
+    make_vertices(graph)
+
+    for node, clone in orig_to_clone.items():
+        clone.edges = [orig_to_clone[e] for e in node.edges]
+
+    return orig_to_clone[graph]
 
 
 def copy_labels(edges):
