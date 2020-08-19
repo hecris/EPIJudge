@@ -8,8 +8,7 @@ def swap_bits(x, i, j):
     j_bit = x & j_mask
 
     if (i_bit or j_bit) and (not i_bit or not j_bit):
-        x ^= i_mask
-        x ^= j_mask
+        x ^= i_mask | j_mask
 
     return x
 
