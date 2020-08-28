@@ -4,12 +4,26 @@ from typing import List, Set
 from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 from test_framework.test_utils import enable_executor_hook
+from functools import lru_cache
 
 
 def decompose_into_dictionary_words(domain: str,
                                     dictionary: Set[str]) -> List[str]:
-    # TODO - you fill in here.
-    return []
+    @lru_cache(None)
+    def solution(idx):
+        if idx == len(domain): return True
+
+        for i in range(idx+1, len(domain)+1):
+            path.append(i)
+            if domain[idx:i] in dictionary and solution(i):
+                return True
+            path.pop()
+
+        return False
+
+    path, res = [0], []
+    solution(0)
+    return [domain[path[i]:path[i+1]] for i in range(len(path) - 1)]
 
 
 @enable_executor_hook
