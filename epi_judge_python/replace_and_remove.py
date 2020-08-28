@@ -5,9 +5,29 @@ from test_framework import generic_test
 from test_framework.test_utils import enable_executor_hook
 
 
+# NOTE: Was close, but had to get hint from solution
 def replace_and_remove(size: int, s: List[str]) -> int:
-    # TODO - you fill in here.
-    return 0
+    write = 0
+    resize = 0
+    for i in range(size):
+        if s[i] != 'b':
+            s[write] = s[i]
+            write += 1
+        if s[i] == 'a':
+            resize += 1
+
+    read, write = write, write + resize - 1
+    res = write + 1
+    for i in reversed(range(read)):
+        if s[i] == 'a':
+            s[write] = 'd'
+            s[write-1] = 'd'
+            write -= 2
+        else:
+            s[write] = s[i]
+            write -= 1
+
+    return res
 
 
 @enable_executor_hook
