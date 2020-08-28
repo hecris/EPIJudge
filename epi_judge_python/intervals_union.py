@@ -11,8 +11,21 @@ Interval = collections.namedtuple('Interval', ('left', 'right'))
 
 
 def union_of_intervals(intervals: List[Interval]) -> List[Interval]:
-    # TODO - you fill in here.
-    return []
+    intervals.sort(key=lambda itv: (itv.left.val, not itv.left.is_closed))
+    stack = []
+
+    for interval in intervals:
+        if stack and (stack[-1].right.val > interval.left.val or
+                     (stack[-1].right.val == interval.left.val and (interval.left.is_closed or stack[-1].right.is_closed))):
+
+            stack[-1] = Interval(
+                    stack[-1].left,
+                    max([stack[-1].right, interval.right], key = lambda p: (p.val, p.is_closed))
+                    )
+        else:
+            stack.append(interval)
+
+    return stack
 
 
 @enable_executor_hook
