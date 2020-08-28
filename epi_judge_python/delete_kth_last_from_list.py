@@ -6,8 +6,20 @@ from test_framework import generic_test
 
 # Assumes L has at least k nodes, deletes the k-th last node in L.
 def remove_kth_last(L: ListNode, k: int) -> Optional[ListNode]:
-    # TODO - you fill in here.
-    return None
+    fast = L
+    for _ in range(k+1):
+        if not fast:
+            # we are deleting the head
+            return L.next
+        fast = fast.next
+
+    slow = L
+    while fast:
+        slow = slow.next
+        fast = fast.next
+
+    slow.next = slow.next.next
+    return L
 
 
 if __name__ == '__main__':

@@ -3,7 +3,27 @@ from test_framework import generic_test
 
 
 def is_linked_list_a_palindrome(L: ListNode) -> bool:
-    # TODO - you fill in here.
+    if not L:
+        return True
+
+    def reverse(head):
+        prev = None
+        cur = head
+        while cur:
+            cur.next, cur, prev = prev, cur.next, cur
+        return prev
+
+    slow = fast = L
+    while fast and fast.next:
+        slow, fast = slow.next, fast.next.next
+
+    tmp, slow.next = slow.next, None
+    tmp = reverse(tmp)
+    while L and tmp:
+        if L.data != tmp.data:
+            return False
+        L, tmp = L.next, tmp.next
+
     return True
 
 
