@@ -9,8 +9,37 @@ from test_framework.test_utils import enable_executor_hook
 
 
 def solve_sudoku(partial_assignment: List[List[int]]) -> bool:
-    # TODO - you fill in here.
-    return True
+    def in_region(choice, i, j):
+        rx = (i // 3) * 3
+        ry = (j // 3) * 3
+
+        return any(partial_assignment[x][y] == choice
+                   for x in range(rx, rx+3)
+                   for y in range(ry, ry+3))
+
+
+    def solution(i, j):
+        next_row = i + (0 if j < 8 else 1)
+        next_col = (j + 1) % 9
+        if i == 9:
+            return True
+
+        if partial_assignment[i][j] != 0:
+            return solution(next_row, next_col)
+
+        row = partial_assignment[i]
+        col = [partial_assignment[r][j] for r in range(9)]
+        for choice in range(1, 10):
+            if choice in row or choice in col or in_region(choice, i, j):
+                continue
+            partial_assignment[i][j] = choice
+            if solution(next_row, next_col):
+                return True
+            partial_assignment[i][j] = 0
+
+        return False
+
+    return solution(0, 0)
 
 
 def assert_unique_seq(seq):
