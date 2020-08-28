@@ -7,9 +7,27 @@ from test_framework.test_failure import PropertyName
 MinMax = collections.namedtuple('MinMax', ('smallest', 'largest'))
 
 
+# NOTE: did it in multiple passes for clarity
 def find_min_max(A: List[int]) -> MinMax:
-    # TODO - you fill in here.
-    return MinMax(0, 0)
+    if len(A) <= 2:
+        return MinMax(min(A), max(A))
+
+    candidates_min = []
+    candidates_max = []
+
+    for i in range(0, len(A) - 1, 2): # n/2 comparisons
+        if A[i] < A[i+1]:
+            candidates_min.append(A[i])
+            candidates_max.append(A[i+1])
+        else:
+            candidates_max.append(A[i])
+            candidates_min.append(A[i+1])
+
+    if len(A) % 2:
+        candidates_max.append(A[-1])
+        candidates_min.append(A[-1])
+
+    return MinMax(min(candidates_min), max(candidates_max)) # 2(n/2 - 1) comparisons, for a total of ~3n/2
 
 
 def res_printer(prop, value):
