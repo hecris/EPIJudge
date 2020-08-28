@@ -8,8 +8,35 @@ from test_framework.test_utils import enable_executor_hook
 
 
 def create_list_of_leaves(tree: BinaryTreeNode) -> List[BinaryTreeNode]:
-    # TODO - you fill in here.
-    return []
+    # more "recursive" solution
+    def alt_solution(root):
+        if not root:
+            return []
+
+        if not root.left and not root.right:
+            return [root]
+
+        return alt_solution(root.left) + alt_solution(root.right)
+
+    # return alt_solution(tree)
+
+    res = []
+    if not tree:
+        return res
+
+    def dfs(root):
+        if not root.left and not root.right:
+            res.append(root)
+            return
+
+        if root.left:
+            dfs(root.left)
+
+        if root.right:
+            dfs(root.right)
+
+    dfs(tree)
+    return res
 
 
 @enable_executor_hook
