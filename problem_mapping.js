@@ -2450,7 +2450,7 @@ problem_mapping = {
                 "total": 1004
             },
             "Python: largest_rectangle_under_skyline.py": {
-                "passed": 1002,
+                "passed": 1004,
                 "total": 1004
             }
         }
