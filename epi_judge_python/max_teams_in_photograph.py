@@ -3,6 +3,7 @@ from typing import List
 
 from test_framework import generic_test
 from test_framework.test_utils import enable_executor_hook
+from collections import deque
 
 
 class GraphVertex:
@@ -13,8 +14,21 @@ class GraphVertex:
 
 
 def find_largest_number_teams(graph: List[GraphVertex]) -> int:
-    # TODO - you fill in here.
-    return 0
+    indegree = {node: 0 for node in graph}
+    for node in graph:
+        for adj in node.edges:
+            indegree[adj] += 1
+
+    q = deque([node for node in graph if indegree[node] == 0])
+    while q:
+        node = q.popleft()
+        for adj in node.edges:
+            indegree[adj] -= 1
+            adj.max_distance = node.max_distance + 1
+            if indegree[adj] == 0:
+                q.append(adj)
+
+    return max([node.max_distance for node in graph]) + 1
 
 
 @enable_executor_hook

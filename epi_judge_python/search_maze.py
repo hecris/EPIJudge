@@ -14,8 +14,32 @@ Coordinate = collections.namedtuple('Coordinate', ('x', 'y'))
 
 def search_maze(maze: List[List[int]], s: Coordinate,
                 e: Coordinate) -> List[Coordinate]:
-    # TODO - you fill in here.
-    return []
+
+    r, c = len(maze), len(maze[0])
+    path = []
+    def valid(node):
+        return node.x >= 0 and node.x < r and node.y >= 0 and node.y < c
+
+    def dfs(node):
+        if not valid(node) or maze[node.x][node.y] == BLACK:
+            return False
+
+        path.append(node)
+        maze[node.x][node.y] = BLACK
+        if node == e:
+            return True
+
+        adjs = [(0,1),(1,0),(0,-1),(-1,0)]
+        for x2, y2 in adjs:
+            next_node = Coordinate(node.x+x2, node.y+y2)
+            if dfs(next_node):
+                return True
+
+        path.pop()
+        return False
+
+    dfs(s)
+    return path
 
 
 def path_element_is_feasible(maze, prev, cur):
