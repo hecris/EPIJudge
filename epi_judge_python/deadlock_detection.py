@@ -20,7 +20,7 @@ def is_deadlocked(graph: List[GraphVertex]) -> bool:
             return True
 
         status[node] = SEEN
-        if any(dfs(adj) for adj in node.edges):
+        if any(dfs(adj) for adj in node.edges if seen[adj] != PROCESSED):
             return True
 
         status[node] = PROCESSED
