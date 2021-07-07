@@ -9,8 +9,23 @@ from test_framework.test_utils import enable_executor_hook
 def pair_includes_ancestor_and_descendant_of_m(possible_anc_or_desc_0: BstNode,
                                                possible_anc_or_desc_1: BstNode,
                                                middle: BstNode) -> bool:
-    # TODO - you fill in here.
-    return True
+    if middle is possible_anc_or_desc_0 or middle is possible_anc_or_desc_1:
+        return False
+
+    def search(root, target):
+        return root if root is target or not root else (
+                search(root.left, target) if target.data < root.data
+                else search(root.right, target)
+                )
+
+    desc = search(middle, possible_anc_or_desc_0)
+
+    if desc is None:
+        return (search(middle, possible_anc_or_desc_1) is not None and
+                search(possible_anc_or_desc_0, middle) is not None)
+
+    return search(possible_anc_or_desc_1, middle) is not None
+
 
 
 @enable_executor_hook
